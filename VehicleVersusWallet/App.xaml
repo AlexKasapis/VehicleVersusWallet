@@ -4,8 +4,8 @@
              xmlns:local="clr-namespace:VehicleVersusWallet"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <BitmapImage x:Key="PriceIcon" UriSource="/resources/petrol-icon.png"/>
-        <BitmapImage x:Key="PetrolIcon" UriSource="resources/price-icon.png"/>
+        <BitmapImage x:Key="PriceIcon" UriSource="/resources/price-icon.png"/>
+        <BitmapImage x:Key="PetrolIcon" UriSource="resources/petrol-icon.png"/>
         <BitmapImage x:Key="SettingsIcon" UriSource="/resources/settings-icon.png"/>
         <BitmapImage x:Key="AddIcon" UriSource="/resources/add-icon.png"/>
 

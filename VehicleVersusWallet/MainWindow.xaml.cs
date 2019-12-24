@@ -17,14 +17,28 @@ namespace VehicleVersusWallet
 {
 	public partial class MainWindow : Window
 	{
-		public static ConsumptionUnits ConsumptionUnit { get; set; }
-
 		public MainWindow()
 		{
 			InitializeComponent();
 
-			// Initialize default consumption unit
-			ConsumptionUnit = ConsumptionUnits.LITERS_PER_100_KM;
+			Utilities.InitializeUtilities();
+
+			VehiclesList.ItemsSource = Utilities.VehicleList;
+		}
+
+		private void AddVehicle_Click(object sender, MouseButtonEventArgs e)
+		{
+			AddVehicleWindow addVehicleWindow = new AddVehicleWindow();
+			addVehicleWindow.ShowDialog();
+			if (addVehicleWindow.DialogResult == false)
+				return;
+
+			Utilities.VehicleList.Add(addVehicleWindow.Vehicle);
+		}
+
+		private void AddTransportation_Click(object sender, MouseButtonEventArgs e)
+		{
+
 		}
 	}
 }

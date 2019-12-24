@@ -5,28 +5,30 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VehicleVersusWallet"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="20"/>
-        </Grid.ColumnDefinitions>
+             d:DesignHeight="70" d:DesignWidth="200">
+    <Border BorderBrush="Black" BorderThickness="0,0,0,1">
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Name}"/>
-        
-        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
-            <Image Source="{StaticResource PriceIcon}"/>
-            <TextBlock Text="{Binding Price}"/>
-            <Image Source="{StaticResource PetrolIcon}"/>
-            <TextBlock Text="{Binding Consumption}"/>
-        </StackPanel>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding NameLong}" VerticalAlignment="Center" ToolTip="Given name" FontWeight="DemiBold"/>
 
-        <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Click="EditVehicle_Click">
-            <Image Source="{StaticResource SettingsIcon}"/>
-        </Button>
-    </Grid>
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="0,5,0,0">
+                <Image Source="{StaticResource PriceIcon}" Width="20" Height="20" ToolTip="Starting price"/>
+                <TextBlock Text="{Binding PriceLong}" Margin="5,0,0,0" VerticalAlignment="Center" ToolTip="Starting price"/>
+                <Image Source="{StaticResource PetrolIcon}" Margin="15,0,0,0" Width="20" Height="20" ToolTip="Fuel consumption (city/highway)"/>
+                <TextBlock Text="{Binding ConsumptionTotal}" Margin="5,0,0,0" VerticalAlignment="Center" ToolTip="Fuel consumption (city/highway)"/>
+            </StackPanel>
+
+            <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Click="EditVehicle_Click" VerticalAlignment="Center" ToolTip="Edit/Remove vehicle">
+                <Image Source="{StaticResource SettingsIcon}"/>
+            </Button>
+        </Grid>
+    </Border>
 </UserControl>

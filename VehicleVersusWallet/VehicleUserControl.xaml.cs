@@ -24,5 +24,10 @@ namespace VehicleVersusWallet
 		{
 			InitializeComponent();
 		}
+
+		private void EditVehicle_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
 	}
 }

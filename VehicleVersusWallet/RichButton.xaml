@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="VehicleVersusWallet.RichButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VehicleVersusWallet"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="RichButtonControl">
+    <Border>
+        <Border.Style>
+            <Style TargetType="Border">
+                <Setter Property="Width" Value="{Binding Path=ButtonWidth ,ElementName=RichButtonControl}"/>
+                <Setter Property="Height" Value="{Binding Path=ButtonHeight ,ElementName=RichButtonControl, FallbackValue=50, TargetNullValue=50}"/>
+                <Setter Property="CornerRadius" Value="{Binding Path=ButtonCornerRadius ,ElementName=RichButtonControl, FallbackValue=10, TargetNullValue=10}"/>
+                <Setter Property="BorderThickness" Value="{Binding Path=ButtonBorderThickness ,ElementName=RichButtonControl, FallbackValue='3,3,3,3', TargetNullValue='3,3,3,3'}"/>
+                <Setter Property="Background" Value="{Binding Path=ButtonBackground, ElementName=RichButtonControl}"/>
+                <Setter Property="BorderBrush" Value="{Binding Path=ButtonBorderBrush ,ElementName=RichButtonControl, FallbackValue=Azure, TargetNullValue=Azure}"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Style.Triggers>
+                    <Trigger Property="Border.IsMouseOver" Value="True">
+                        <Setter Property="Border.Background" Value="{Binding Path=ButtonBackgroundHover, ElementName=RichButtonControl}"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+        <DockPanel>
+            <Image Source="{Binding Path=ButtonImage, ElementName=RichButtonControl}" Margin="1"
+                   Width="{Binding Path=ButtonImageWidth, ElementName=RichButtonControl}"
+                   Height="{Binding Path=ButtonImageHeight, ElementName=RichButtonControl}"
+                   DockPanel.Dock="Left"/>
+            <TextBlock Width="{Binding Path=ButtonTextWidth, ElementName=RichButtonControl, FallbackValue=150, TargetNullValue=150}" 
+                       FontSize="{Binding Path=ButtonFontSize, ElementName=RichButtonControl, FallbackValue=16, TargetNullValue=16}"
+                       FontWeight="{Binding Path=ButtonFontWeight, ElementName=RichButtonControl, FallbackValue=DemiBold, TargetNullValue=DemiBold}" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center"
+                       Foreground="{Binding Path=ButtonTextBrush, ElementName=RichButtonControl, FallbackValue=Azure, TargetNullValue=Azure}"
+                       Text="{Binding Path=ButtonText, ElementName=RichButtonControl}" Margin="1"
+                       DockPanel.Dock="Left"/>
+        </DockPanel>
+    </Border>
+</UserControl>
