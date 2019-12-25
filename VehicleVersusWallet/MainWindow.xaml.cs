@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace VehicleVersusWallet
 		{
 			InitializeComponent();
 
+			SqlKernel.InitializeDatabase();
 			Utilities.InitializeUtilities();
 
 			VehiclesList.ItemsSource = Utilities.VehicleList;
