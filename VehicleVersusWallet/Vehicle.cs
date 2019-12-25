@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,48 +9,52 @@ namespace VehicleVersusWallet
 {
 	public class Vehicle
 	{
-		private float priceOriginal;
-		private float consumptionCityOriginal;
-		private float consumptionHighwayOriginal;
-		private ConsumptionUnit consumptionUnitOriginal;
-		private CurrencyUnit currencyUnitOriginal;
-		private VehicleType vehicleType;
+		// Vehicle identification. Used to identify a vehicle in the database.
+		public int VehicleID { get; set; }
 
-		// These units use the original saved values to convert to the local format
-		public string NameShort { get; private set; }
-		public string NameLong { get { return $"{NameShort} ({Utilities.VehicleTypesList[(int)vehicleType]})"; } }
+		// Vehicle given name. The long name comes with the information about the vehicle type.
+		public string NameShort { get; set; }
+		public string NameLong { get { return $"{NameShort} ({Utilities.VehicleTypesList[(int)VehicleType]})"; } }
 
-		public float PriceShort { get { return Utilities.GetLocalPriceValue(priceOriginal, currencyUnitOriginal); } }
+		// The type of the vehicle
+		public VehicleType VehicleType { get; set; }
+
+		// Starting prices. The original price is the one given, while the other two go through a unit transformation.
+		public float PriceOriginal { get; set; }
+		public float PriceShort { get { return Utilities.GetLocalPriceValue(PriceOriginal, CurrencyUnitOriginal); } }
 		public string PriceLong { get { return $"{PriceShort}{Utilities.GetCurrencyUnit()}"; } }
 
-		public float ConsumptionCityShort { get { return Utilities.GetLocalConsumptionValue(consumptionCityOriginal, consumptionUnitOriginal); } }
+		// Fuel consumption values. The originals are the one given, while the others go through a unit transformation.
+		public float ConsumptionCityOriginal { get; set; }
+		public float ConsumptionCityShort { get { return Utilities.GetLocalConsumptionValue(ConsumptionCityOriginal, ConsumptionUnitOriginal); } }
 		public string ConsumptionCityLong { get { return $"{ConsumptionCityShort}{Utilities.GetConsumptionUnit()}"; } }
-
-		public float ConsumptionHighwayShort { get { return Utilities.GetLocalConsumptionValue(consumptionHighwayOriginal, consumptionUnitOriginal); } }
+		public float ConsumptionHighwayOriginal { get; set; }
+		public float ConsumptionHighwayShort { get { return Utilities.GetLocalConsumptionValue(ConsumptionHighwayOriginal, ConsumptionUnitOriginal); } }
 		public string ConsumptionHighwayLong { get { return $"{ConsumptionHighwayShort}{Utilities.GetConsumptionUnit()}"; } }
-
 		public string ConsumptionTotal { get { return $@"{ConsumptionCityShort}/{ConsumptionHighwayShort}({Utilities.GetConsumptionUnit()})"; } }
 
-		public Vehicle(string _name, float _price, float _consCity, float _consHigh, ConsumptionUnit _consUnit, CurrencyUnit _currUnit, VehicleType _vehType)
+		// The original units used when the price and consumption of the vehicle were registered. Used for unit convertion.
+		public ConsumptionUnit ConsumptionUnitOriginal { get; set; }
+		public CurrencyUnit CurrencyUnitOriginal { get; set; }
+
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		public Vehicle() { }
+
+		/// <summary>
+		/// Creates a Vehicle object using a DataRow. Used when retrieving vehicles from the database.
+		/// </summary>
+		/// <param name="dataRow">A DataRow object with data fetched from the database.</param>
+		public Vehicle(DataRow dataRow)
 		{
-			NameShort = _name;
-			priceOriginal = _price;
-			consumptionCityOriginal = _consCity;
-			consumptionHighwayOriginal = _consHigh;
-			consumptionUnitOriginal = _consUnit;
-			currencyUnitOriginal = _currUnit;
-			vehicleType = _vehType;
-		}
-		
-		public void ModifyVehicle(string _name, float _price, float _consCity, float _consHigh, ConsumptionUnit _consUnit, CurrencyUnit _currUnit, VehicleType _vehType)
-		{
-			NameShort = _name;
-			priceOriginal = _price;
-			consumptionCityOriginal = _consCity;
-			consumptionHighwayOriginal = _consHigh;
-			consumptionUnitOriginal = _consUnit;
-			currencyUnitOriginal = _currUnit;
-			vehicleType = _vehType;
+			VehicleID = Convert.ToInt32(dataRow["VEHICLE_ID"]);
+			NameShort = dataRow["NAME"].ToString();
+			PriceOriginal = float.Parse(dataRow["PRICE_ORIGINAL"].ToString());
+			ConsumptionCityOriginal = float.Parse(dataRow["CONSUMPTION_CITY_ORIGINAL"].ToString());
+			ConsumptionHighwayOriginal = float.Parse(dataRow["CONSUMPTION_HIGHWAY_ORIGINAL"].ToString());
+			ConsumptionUnitOriginal = (ConsumptionUnit)Convert.ToInt32(dataRow["CONSUMPTION_UNIT_INDEX_ORIGINAL"]);
+			CurrencyUnitOriginal = (CurrencyUnit)Convert.ToInt32(dataRow["CURRENCY_UNIT_INDEX_ORIGINAL"]);
 		}
 	}
 }

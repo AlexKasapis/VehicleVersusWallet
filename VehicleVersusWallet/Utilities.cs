@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace VehicleVersusWallet
 {
@@ -36,14 +38,28 @@ namespace VehicleVersusWallet
 
 		public static ObservableCollection<Vehicle> VehicleList;
 
-		public static void InitializeUtilities()
+		/// <summary>
+		/// Loads any precursor data needed for the application. These data are the application settings and any
+		/// saved data the user created.
+		/// </summary>
+		/// <param name="mainWindow"></param>
+		public static void InitializeUtilities(MainWindow mainWindow)
 		{
+			// Retreive the settings DataTable from the database
+			DataTable settingsDataTable = SqlKernel.ExecuteQuery("SELECT * FROM SETTINGS;");
+			DataRow settingsDataRow = settingsDataTable.Rows[0];
+
+			// Initialize the window properties
+			mainWindow.Width = Convert.ToInt32(settingsDataRow["WINDOW_WIDTH"]);
+			mainWindow.Height = Convert.ToInt32(settingsDataRow["WINDOW_HEIGHT"]);
+			mainWindow.WindowState = Convert.ToInt32(settingsDataRow["FULLSCREEN"]) == 1 ? WindowState.Maximized : WindowState.Normal;
+
 			// Initialize the default units
-			ConsumptionUnit = ConsumptionUnit.LITERS_PER_100_KM;
-			CurrencyUnit = CurrencyUnit.EURO;
+			ConsumptionUnit = (ConsumptionUnit)Convert.ToInt32(settingsDataTable.Rows[0]["SELECTED_CONSUMPTION_UNIT_INDEX"]);
+			CurrencyUnit = (CurrencyUnit)Convert.ToInt32(settingsDataTable.Rows[0]["SELECTED_CURRENCY_UNIT_INDEX"]);
 
 			// Initialize the lists
-			VehicleList = new ObservableCollection<Vehicle>() { };
+			VehicleList = new ObservableCollection<Vehicle>(SqlKernel.GetVehicles());
 		}
 
 		public static string GetCurrencyUnit() { return CurrencyUnitList[(int)CurrencyUnit]; }

@@ -23,7 +23,7 @@ namespace VehicleVersusWallet
 			InitializeComponent();
 
 			SqlKernel.InitializeDatabase();
-			Utilities.InitializeUtilities();
+			Utilities.InitializeUtilities(this);
 
 			VehiclesList.ItemsSource = Utilities.VehicleList;
 		}
@@ -35,6 +35,8 @@ namespace VehicleVersusWallet
 			if (addVehicleWindow.DialogResult == false)
 				return;
 
+			// Add the vehicle to the list and the database
+			SqlKernel.AddVehicle(addVehicleWindow.Vehicle);
 			Utilities.VehicleList.Add(addVehicleWindow.Vehicle);
 		}
 

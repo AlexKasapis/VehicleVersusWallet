@@ -14,6 +14,8 @@ namespace VehicleVersusWallet
 	{
 		private static string DatabaseFilename { get; } = "Database.sqlite";
 
+		#region Meta database functions
+
 		/// <summary>
 		/// Sets up the database and makes sure it is ready for the application.
 		/// </summary>
@@ -35,13 +37,13 @@ namespace VehicleVersusWallet
 			string vehiclesTableString = "CREATE TABLE VEHICLES (VEHICLE_ID INTEGER PRIMARY KEY UNIQUE NOT NULL, " +
 				"NAME VARCHAR NOT NULL, " +
 				"VEHICLE_TYPE TEXT NOT NULL, " +
-				"PRICE DECIMAL NOT NULL, " +
-				"CONSUMPTION_CITY DECIMAL NOT NULL, " +
-				"CONSUMPTION_HIGHWAY DECIMAL NOT NULL, " +
-				"CONSUMPTION_UNIT_ORIGINAL TEXT NOT NULL, " +
-				"CURRENCY_UNIT_ORIGINAL TEXT NOT NULL);";
+				"PRICE_ORIGINAL DECIMAL NOT NULL, " +
+				"CONSUMPTION_CITY_ORIGINAL DECIMAL NOT NULL, " +
+				"CONSUMPTION_HIGHWAY_ORIGINAL DECIMAL NOT NULL, " +
+				"CONSUMPTION_UNIT_INDEX_ORIGINAL INTEGER NOT NULL, " +
+				"CURRENCY_UNIT_INDEX_ORIGINAL INTEGER NOT NULL);";
 
-			string settingsTableString = "CREATE TABLE SETTINGS (WINDOW_WIDTH INTEGER NOT NULL DEFAULT(800), " +
+			string settingsTableString = "CREATE TABLE SETTINGS (WINDOW_WIDTH INTEGER NOT NULL DEFAULT(1200), " +
 				"WINDOW_HEIGHT INTEGER NOT NULL	DEFAULT(600), " +
 				"FULLSCREEN BOOLEAN NOT NULL DEFAULT(FALSE), " +
 				"SELECTED_CONSUMPTION_UNIT_INDEX INTEGER NOT NULL DEFAULT(0), " +
@@ -79,5 +81,67 @@ namespace VehicleVersusWallet
 				}
 			}
 		}
+
+		#endregion
+
+		#region Specific database functions
+
+		/// <summary>
+		/// Returns all the vehices registered in the database.
+		/// </summary>
+		/// <returns>A list with Vehicle objects that are found in the database.</returns>
+		public static List<Vehicle> GetVehicles()
+		{
+			// Get the data.
+			DataTable dataTable = ExecuteQuery("SELECT * FROM VEHICLES;");
+
+			// Create and populate the vehicles' list.
+			List<Vehicle> vehicles = new List<Vehicle>();
+			foreach (DataRow dataRow in dataTable.Rows)
+			{
+				Vehicle vehicle = new Vehicle(dataRow);
+				vehicles.Add(vehicle);
+			}
+
+			// Return the list, empty or otherwise.
+			return vehicles;
+		}
+
+		/// <summary>
+		/// Adds the given vehicle to the database.
+		/// </summary>
+		/// <param name="vehicle">THe vehicle object to add to the database.</param>
+		public static void AddVehicle(Vehicle vehicle)
+		{
+			string sqlQuery = $"INSERT INTO VEHICLES (VEHICLE_ID, NAME, VEHICLE_TYPE, PRICE_ORIGINAL, CONSUMPTION_CITY_ORIGINAL, " +
+				$"CONSUMPTION_HIGHWAY_ORIGINAL, CONSUMPTION_UNIT_INDEX_ORIGINAL, CURRENCY_UNIT_INDEX_ORIGINAL) VALUES " +
+				$"({vehicle.VehicleID}, '{vehicle.NameShort}', {(int)vehicle.VehicleType}, {vehicle.PriceOriginal}, " +
+				$"{vehicle.ConsumptionCityOriginal}, {vehicle.ConsumptionHighwayOriginal}, {(int)vehicle.ConsumptionUnitOriginal}, " +
+				$"{(int)vehicle.CurrencyUnitOriginal})";
+
+			ExecuteQuery(sqlQuery);
+		}
+
+		/// <summary>
+		/// Fetches an available ID to be used by a vehicle at its creation.
+		/// </summary>
+		/// <returns>The available vehicle identifier.</returns>
+		public static int GetAvailableVehicleID()
+		{
+			DataTable dataTable = ExecuteQuery("SELECT MAX(VEHICLE_ID) FROM VEHICLES;");
+			string returnString = dataTable.Rows[0]["MAX(VEHICLE_ID)"].ToString();
+			return returnString == "" ? 0 : Convert.ToInt32(returnString) + 1;
+		}
+
+		/// <summary>
+		/// Deletes a vehicle from the database, using its identifier.
+		/// </summary>
+		/// <param name="vehicleID">The vehicle that we want deleted identifier.</param>
+		public static void DeleteVehicle(int vehicleID)
+		{
+			ExecuteQuery($"DELETE FROM VEHICLES WHERE VEHICLE_ID={vehicleID};");
+		}
+
+		#endregion
 	}
 }

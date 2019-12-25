@@ -38,15 +38,17 @@ namespace VehicleVersusWallet
 
 		private void AddVehicle_Click(object sender, RoutedEventArgs e)
 		{
-			Vehicle = new Vehicle(
-				_name: NameTextBox.Text,
-				_price: float.Parse(PriceTextBox.Text, CultureInfo.InvariantCulture.NumberFormat),
-				_consCity: float.Parse(ConsumptionCityTextBox.Text, CultureInfo.InvariantCulture.NumberFormat),
-				_consHigh: float.Parse(ConsumptionHighwayTextBox.Text, CultureInfo.InvariantCulture.NumberFormat),
-				_consUnit: Utilities.ConsumptionUnit,
-				_currUnit: Utilities.CurrencyUnit,
-				_vehType: (VehicleType)VehicleTypeCombobox.SelectedIndex
-			);
+			Vehicle = new Vehicle()
+			{
+				VehicleID = SqlKernel.GetAvailableVehicleID(),
+				NameShort = NameTextBox.Text,
+				PriceOriginal = float.Parse(PriceTextBox.Text, CultureInfo.InvariantCulture.NumberFormat),
+				ConsumptionCityOriginal = float.Parse(ConsumptionCityTextBox.Text, CultureInfo.InvariantCulture.NumberFormat),
+				ConsumptionHighwayOriginal = float.Parse(ConsumptionHighwayTextBox.Text, CultureInfo.InvariantCulture.NumberFormat),
+				ConsumptionUnitOriginal = Utilities.ConsumptionUnit,
+				CurrencyUnitOriginal = Utilities.CurrencyUnit,
+				VehicleType = (VehicleType)VehicleTypeCombobox.SelectedIndex
+			};
 
 			DialogResult = true;
 		}
