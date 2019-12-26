@@ -22,7 +22,7 @@ namespace VehicleVersusWallet
 		// Starting prices. The original price is the one given, while the other two go through a unit transformation.
 		public float PriceOriginal { get; set; }
 		public float PriceShort { get { return Utilities.GetLocalPriceValue(PriceOriginal, CurrencyUnitOriginal); } }
-		public string PriceLong { get { return $"{PriceShort}{Utilities.GetCurrencyUnit()}"; } }
+		public string PriceLong { get { return $"{PriceShort}{Utilities.GetCurrencyUnit(true)}"; } }
 
 		// Fuel consumption values. The originals are the one given, while the others go through a unit transformation.
 		public float ConsumptionCityOriginal { get; set; }

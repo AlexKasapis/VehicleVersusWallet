@@ -28,8 +28,12 @@ namespace VehicleVersusWallet
 	public static class Utilities
 	{
 		// The indexes of the values below must correspond to the value of each unit in the enumerations
-		public static List<string> ConsumptionUnitList = new List<string> { "Lt/100km", "G/100Mi(US)", "G/100Mi(UK)", "km/Lt", "Mi/G(US)", "Mi/G(UK)" };
+		public static List<string> ConsumptionUnitList = new List<string>
+		{
+			"Lt/100km", "G/100Mi(US)", "G/100Mi(UK)", "km/Lt", "Mi/G(US)", "Mi/G(UK)"
+		};
 		public static List<string> CurrencyUnitList = new List<string> { "Euro (€)", "US Dollar ($)", "Pound (£)" };
+		public static List<string> CurrencyUnitSymbolList = new List<string> { "€", "$", "£" };
 		public static List<string> VehicleTypesList = new List<string> { "Car", "Motorcycle" };
 
 		// Currently selected units
@@ -62,18 +66,92 @@ namespace VehicleVersusWallet
 			VehicleList = new ObservableCollection<Vehicle>(SqlKernel.GetVehicles());
 		}
 
-		public static string GetCurrencyUnit() { return CurrencyUnitList[(int)CurrencyUnit]; }
-
-		public static string GetConsumptionUnit() { return ConsumptionUnitList[(int)ConsumptionUnit]; }
-
-		public static float GetLocalPriceValue(float originalPrice, CurrencyUnit originalUnit)
+		public static string GetCurrencyUnit(bool symbolOnly)
 		{
-			return 1;
+			return symbolOnly ? CurrencyUnitSymbolList[(int)CurrencyUnit] : CurrencyUnitList[(int)CurrencyUnit];
 		}
 
-		public static float GetLocalConsumptionValue(float originalConsumption, ConsumptionUnit originalUnit)
+		public static string GetConsumptionUnit()
 		{
-			return 1;
+			return ConsumptionUnitList[(int)ConsumptionUnit];
+		}
+
+		public static float GetLocalPriceValue(float originalValue, CurrencyUnit originalUnit)
+		{
+			// These exchange rates are hardcoded and temporary until I write an automatic fetcher of exchange rates.
+			float EUR_TO_USD_RATE = 1.11f;
+			float EUR_TO_POUND_RATE = 0.85f;
+			float USD_TO_POUND_RATE = 0.77f;
+
+			float convertedValue = originalValue;
+
+			if (originalUnit == CurrencyUnit.EURO)
+			{
+				if (CurrencyUnit == CurrencyUnit.US_DOLLAR)
+					convertedValue *= EUR_TO_USD_RATE;
+				else if (CurrencyUnit == CurrencyUnit.POUND)
+					convertedValue *= EUR_TO_POUND_RATE;
+			}
+			else if (originalUnit == CurrencyUnit.US_DOLLAR)
+			{
+				if (CurrencyUnit == CurrencyUnit.EURO)
+					convertedValue *= 1 / EUR_TO_USD_RATE;
+				else if (CurrencyUnit == CurrencyUnit.POUND)
+					convertedValue *= USD_TO_POUND_RATE;
+			}
+			else if (originalUnit == CurrencyUnit.POUND)
+			{
+				if (CurrencyUnit == CurrencyUnit.EURO)
+					convertedValue *= 1 / EUR_TO_POUND_RATE;
+				else if (CurrencyUnit == CurrencyUnit.US_DOLLAR)
+					convertedValue *= 1 / USD_TO_POUND_RATE;
+			}
+
+			return (float)Math.Round(convertedValue, 2);
+		}
+
+		public static float GetLocalConsumptionValue(float originalValue, ConsumptionUnit originalUnit)
+		{
+			// Unit convertion multipliers. For the opposite convertion multiply with (1/multiplier).
+			float LITRE_TO_GALLON_UK_MULTIPLIER = 0.219969f;
+			float LITRE_TO_GALLON_US_MULTIPLIER = 0.264171f;
+			float GALLON_UK_TO_GALLON_US_MULTIPLIER = 1.20095f;
+			float KILOMETRE_TO_MILE_MULTIPLIER = 0.621371f;
+
+			// The convertion comes in two steps. First, if we need to swap the form of the format
+			// (ie FuelVolume/Distance <-> Distance/FuelVolume) do that. Then, we make any unit transformations
+			// (ie between US, Imperial and Metric).
+			float convertedValue = originalValue;
+			if ((int)originalUnit % 3 - (int)ConsumptionUnit % 3 != 0)  // The one needs to be 0,1,2 and the other 3,4,5
+				convertedValue = 100 / convertedValue;
+
+			string[] unitCodes = new string[] { "METRIC", "US", "UK", "METRIC", "US", "UK" };
+			string unitStart = unitCodes[(int)originalUnit];
+			string unitFinal = unitCodes[(int)ConsumptionUnit];
+
+			if (unitStart == "METRIC")
+			{
+				if (unitFinal == "US")
+					convertedValue *= LITRE_TO_GALLON_US_MULTIPLIER / KILOMETRE_TO_MILE_MULTIPLIER;
+				else if (unitFinal == "UK")
+					convertedValue *= LITRE_TO_GALLON_UK_MULTIPLIER / KILOMETRE_TO_MILE_MULTIPLIER;
+			}
+			else if (unitStart == "US")
+			{
+				if (unitFinal == "METRIC")
+					convertedValue *= KILOMETRE_TO_MILE_MULTIPLIER / LITRE_TO_GALLON_US_MULTIPLIER;
+				else if (unitFinal == "UK")
+					convertedValue *= 1 / GALLON_UK_TO_GALLON_US_MULTIPLIER;
+			}
+			else if (unitStart == "UK")
+			{
+				if (unitFinal == "METRIC")
+					convertedValue *= KILOMETRE_TO_MILE_MULTIPLIER / LITRE_TO_GALLON_UK_MULTIPLIER;
+				else if (unitFinal == "US")
+					convertedValue *= GALLON_UK_TO_GALLON_US_MULTIPLIER;
+			}
+
+			return (float)Math.Round(convertedValue, 2);
 		}
 	}
 }
