@@ -6,7 +6,18 @@
              xmlns:local="clr-namespace:VehicleVersusWallet"
              mc:Ignorable="d" 
              d:DesignHeight="70" d:DesignWidth="200">
-    <Border BorderBrush="Black" BorderThickness="0,0,0,1">
+    <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,0,1">
+        <Border.Style>
+            <Style TargetType="Border">
+                <Setter Property="Background" Value="{StaticResource BackgroundColor}"/>
+                <Style.Triggers>
+                    <Trigger Property="Border.IsMouseOver" Value="True">
+                        <Setter Property="Border.Background" Value="{StaticResource BackgroundColorHover}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+        
         <Grid Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -17,23 +28,19 @@
                 <ColumnDefinition Width="20"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding NameLong}" VerticalAlignment="Center" ToolTip="Given name"
-                       FontWeight="DemiBold"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding NameLong}" VerticalAlignment="Center" ToolTip="Given name" FontWeight="DemiBold" Foreground="{StaticResource TextColor}"/>
 
-            <CheckBox Grid.Row="0" Grid.Column="1" Name="ShowInGraphCheckbox" VerticalAlignment="Center" HorizontalAlignment="Center"
-                      IsChecked="True" ToolTip="Show this vehicle in the graphs"/>
+            <CheckBox Grid.Row="0" Grid.Column="1" Name="ShowInGraphCheckbox" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="True"
+                      ToolTip="Show this vehicle in the graphs"/>
 
             <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="0,5,0,0">
                 <Image Source="{StaticResource PriceIcon}" Width="20" Height="20" ToolTip="Starting price"/>
-                <TextBlock Text="{Binding PriceLong}" Margin="5,0,0,0" VerticalAlignment="Center" ToolTip="Starting price"/>
-                <Image Source="{StaticResource PetrolIcon}" Margin="15,0,0,0" Width="20" Height="20"
-                       ToolTip="Fuel consumption (city/highway)"/>
-                <TextBlock Text="{Binding ConsumptionTotal}" Margin="5,0,0,0" VerticalAlignment="Center"
-                           ToolTip="Fuel consumption (city/highway)"/>
+                <TextBlock Text="{Binding PriceLong}" Margin="5,0,0,0" VerticalAlignment="Center" ToolTip="Starting price" Foreground="{StaticResource TextColor}"/>
+                <Image Source="{StaticResource PetrolIcon}" Margin="15,0,0,0" Width="20" Height="20" ToolTip="Fuel consumption (city/highway)"/>
+                <TextBlock Text="{Binding ConsumptionTotal}" Margin="5,0,0,0" VerticalAlignment="Center" ToolTip="Fuel consumption (city/highway)" Foreground="{StaticResource TextColor}"/>
             </StackPanel>
 
-            <Button Grid.Row="1" Grid.Column="1" Click="EditVehicle_Click" VerticalAlignment="Center" ToolTip="Edit/Remove vehicle"
-                    Width="14">
+            <Button Grid.Row="1" Grid.Column="1" Click="EditVehicle_Click" VerticalAlignment="Center" ToolTip="Edit/Remove vehicle" Width="14">
                 <Image Source="{StaticResource SettingsIcon}"/>
             </Button>
         </Grid>

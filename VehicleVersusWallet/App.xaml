@@ -4,11 +4,13 @@
              xmlns:local="clr-namespace:VehicleVersusWallet"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <!--Appication Icons-->
         <BitmapImage x:Key="PriceIcon" UriSource="/resources/price-icon.png"/>
         <BitmapImage x:Key="PetrolIcon" UriSource="resources/petrol-icon.png"/>
         <BitmapImage x:Key="SettingsIcon" UriSource="/resources/settings-icon.png"/>
         <BitmapImage x:Key="AddIcon" UriSource="/resources/add-icon.png"/>
 
+        <!--Application General Styles-->
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="FontSize" Value="16"/>
         </Style>
@@ -17,5 +19,12 @@
             <Setter Property="FontSize" Value="16"/>
         </Style>
         
+        <!--Application Color Themes-->
+        <SolidColorBrush Color="#000000" x:Key="ApplicationBackgroundColor"/>
+        <SolidColorBrush Color="#14213D" x:Key="BackgroundColor"/>
+        <SolidColorBrush Color="#1B2D54" x:Key="BackgroundColorHover"/>
+        <SolidColorBrush Color="#2D4A89" x:Key="BorderColor"/>
+        <SolidColorBrush Color="#E5E5E5" x:Key="TextColor"/>
+
     </Application.Resources>
 </Application>

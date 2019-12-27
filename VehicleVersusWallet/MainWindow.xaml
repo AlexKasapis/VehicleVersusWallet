@@ -7,17 +7,17 @@
         mc:Ignorable="d"
         Title="Vehicle Versus Wallet" Height="600" Width="1200"
         WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Grid Background="{StaticResource ApplicationBackgroundColor}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,3,0">
+        <Border Grid.Column="0" BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,3,0">
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="Vehicles List" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,5,5,0"/>
-                <Border BorderBrush="Black" BorderThickness="0,1,0,0"/>
+                <TextBlock Text="Vehicles List" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,5,5,5" FontWeight="DemiBold" Foreground="{StaticResource TextColor}"/>
+                <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="0,1,0,0"/>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                     <StackPanel Orientation="Vertical">
                         <ItemsControl x:Name="VehiclesList" Grid.Column="0">
@@ -32,21 +32,24 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <local:RichButton ButtonImage="{StaticResource AddIcon}" ButtonText="Add Vehicle" MouseLeftButtonUp="AddVehicle_Click" ButtonBorderBrush="Black"
-                                      ButtonBackground="AliceBlue" ButtonTextBrush="Black" ButtonWidth="125" ButtonTextWidth="70" Margin="5"/>
+                        <local:RichButton ButtonImage="{StaticResource AddIcon}" ButtonText="Add Vehicle" MouseLeftButtonUp="AddVehicle_Click" ButtonBorderBrush="{StaticResource BorderColor}"
+                                          ButtonBackground="{StaticResource BackgroundColor}" ButtonBackgroundHover="{StaticResource BackgroundColorHover}" ButtonWidth="125"
+                                          ButtonTextWidth="70" Margin="5" ButtonTextBrush="{StaticResource TextColor}"/>
                     </StackPanel>
                 </ScrollViewer>
             </StackPanel>
         </Border>
 
-        <Border Grid.Column="2" BorderBrush="Black" BorderThickness="3,0,0,0">
+        <Border Grid.Column="2" BorderBrush="{StaticResource BorderColor}" BorderThickness="3,0,0,0">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Text="Transportations List" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,5,5,0"/>
-                    <Border BorderBrush="Black" BorderThickness="0,1,0,0"/>
+                    <TextBlock Text="Transportations List" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,5,5,5" FontWeight="DemiBold"
+                               Foreground="{StaticResource TextColor}"/>
+                    <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="0,1,0,0"/>
                     <StackPanel Orientation="Vertical"/>
-                    <local:RichButton ButtonImage="{StaticResource AddIcon}" ButtonText="Add Transportation" MouseLeftButtonUp="AddTransportation_Click" ButtonBorderBrush="Black"
-                                      ButtonBackground="AliceBlue" ButtonTextBrush="Black" ButtonWidth="175" ButtonTextWidth="110" Margin="5"/>
+                    <local:RichButton ButtonImage="{StaticResource AddIcon}" ButtonText="Add Transportation" MouseLeftButtonUp="AddTransportation_Click"
+                                      ButtonBorderBrush="{StaticResource BorderColor}" ButtonBackground="{StaticResource BackgroundColor}" ButtonWidth="175" ButtonTextWidth="110" Margin="5"
+                                      ButtonBackgroundHover="{StaticResource BackgroundColorHover}" ButtonTextBrush="{StaticResource TextColor}"/>
                 </StackPanel>
             </ScrollViewer>
         </Border>
