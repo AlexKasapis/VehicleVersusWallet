@@ -15,6 +15,11 @@ namespace VehicleVersusWallet
 		KM_PER_LITER, MILES_PER_GALLON_US, MILES_PER_GALLON_UK
 	}
 
+	public enum DistanceUnit
+	{
+		KILOMETERS, MILES
+	}
+
 	public enum CurrencyUnit
 	{
 		EURO, US_DOLLAR, POUND

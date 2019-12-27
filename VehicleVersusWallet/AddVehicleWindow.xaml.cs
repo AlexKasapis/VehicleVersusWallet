@@ -36,7 +36,7 @@ namespace VehicleVersusWallet
 			ConsumptionHighwayCombobox.SelectedIndex = (int)Utilities.ConsumptionUnit;
 		}
 
-		private void AddVehicle_Click(object sender, RoutedEventArgs e)
+		private void AddVehicle_Click(object sender, MouseButtonEventArgs e)
 		{
 			Vehicle = new Vehicle()
 			{
@@ -53,7 +53,7 @@ namespace VehicleVersusWallet
 			DialogResult = true;
 		}
 
-		private void Cancel_Click(object sender, RoutedEventArgs e)
+		private void Cancel_Click(object sender, MouseButtonEventArgs e)
 		{
 			DialogResult = false;
 		}

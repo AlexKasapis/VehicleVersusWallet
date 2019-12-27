@@ -5,49 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VehicleVersusWallet"
         mc:Ignorable="d"
-        Title="Add a new vehicle" Height="200" Width="600"
+        Title="Add a new vehicle" Height="230" Width="600"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen">
-    <Grid Margin="5">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        WindowStartupLocation="CenterScreen" Background="White">
+    <Grid Margin="1,0,1,1" Background="{StaticResource ApplicationBackgroundColor}">
+        <Grid Margin="4" Background="{StaticResource ApplicationBackgroundColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="Name" VerticalAlignment="Center"/>
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-            <TextBox  Name="NameTextBox" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <ComboBox Name="VehicleTypeCombobox" Width="125" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        </StackPanel>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name" VerticalAlignment="Center" Foreground="{StaticResource TextColor}"/>
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                <TextBox  Name="NameTextBox" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{StaticResource TextInputBackgroundColor}"
+                      Foreground="{StaticResource BackgroundColor}"/>
+                <ComboBox Name="VehicleTypeCombobox" Width="125" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </StackPanel>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Price" VerticalAlignment="Center"/>
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-            <TextBox  Name="PriceTextBox" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <ComboBox Name="CurrencyCombobox" Width="125" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="CurrencyCombobox_SelectionChanged"/>
-        </StackPanel>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Price" VerticalAlignment="Center" Foreground="{StaticResource TextColor}"/>
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                <TextBox  Name="PriceTextBox" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{StaticResource TextInputBackgroundColor}"
+                      Foreground="{StaticResource BackgroundColor}"/>
+                <ComboBox Name="CurrencyCombobox" Width="125" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="CurrencyCombobox_SelectionChanged"/>
+            </StackPanel>
 
-        <TextBlock Text="Fuel Consumption (City)" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
-        <StackPanel Orientation="Horizontal"  Grid.Row="2" Grid.Column="1">
-            <TextBox Name="ConsumptionCityTextBox" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <ComboBox Name="ConsumptionCityCombobox" Width="125" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="ConsumptionCityCombobox_SelectionChanged"/>
-        </StackPanel>
+            <TextBlock Text="Fuel Consumption (City)" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="{StaticResource TextColor}"/>
+            <StackPanel Orientation="Horizontal"  Grid.Row="2" Grid.Column="1">
+                <TextBox Name="ConsumptionCityTextBox" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{StaticResource TextInputBackgroundColor}"
+                      Foreground="{StaticResource BackgroundColor}"/>
+                <ComboBox Name="ConsumptionCityCombobox" Width="125" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="ConsumptionCityCombobox_SelectionChanged"/>
+            </StackPanel>
 
-        <TextBlock Text="Fuel Consumption (Highway)" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
-            <TextBox Name="ConsumptionHighwayTextBox" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <ComboBox Name="ConsumptionHighwayCombobox" Width="125" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="ConsumptionHighwayCombobox_SelectionChanged"/>
-        </StackPanel>
+            <TextBlock Text="Fuel Consumption (Highway)" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Foreground="{StaticResource TextColor}"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
+                <TextBox Name="ConsumptionHighwayTextBox" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{StaticResource TextInputBackgroundColor}"
+                      Foreground="{StaticResource BackgroundColor}"/>
+                <ComboBox Name="ConsumptionHighwayCombobox" Width="125" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="ConsumptionHighwayCombobox_SelectionChanged"/>
+            </StackPanel>
 
-        <Button Grid.Row="4" Grid.Column="0" Content="Add" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0"
-                Click="AddVehicle_Click"/>
-        <Button Grid.Row="4" Grid.Column="1" Content="Cancel" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"
-                Click="Cancel_Click"/>
+            <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <local:RichButton ButtonText="Add Vehicle" ButtonBackground="{StaticResource BackgroundColor}" Margin="5,5,5,0" ButtonBackgroundHover="{StaticResource BackgroundColorHover}"
+                              ButtonBorderBrush="{StaticResource BorderColor}" MouseLeftButtonUp="AddVehicle_Click" ButtonImage="{StaticResource ConfirmIcon}" ButtonWidth="150"
+                              ButtonTextWidth="90" ButtonHeight="40" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <local:RichButton ButtonText="Cancel" ButtonBackground="{StaticResource BackgroundColor}" Margin="5,5,5,0" ButtonBackgroundHover="{StaticResource BackgroundColorHover}"
+                              ButtonBorderBrush="{StaticResource BorderColor}" MouseLeftButtonUp="Cancel_Click" ButtonImage="{StaticResource CancelIcon}" ButtonWidth="110"
+                              ButtonTextWidth="60" ButtonHeight="40" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

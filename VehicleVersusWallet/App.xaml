@@ -9,6 +9,8 @@
         <BitmapImage x:Key="PetrolIcon" UriSource="resources/petrol-icon.png"/>
         <BitmapImage x:Key="SettingsIcon" UriSource="/resources/settings-icon.png"/>
         <BitmapImage x:Key="AddIcon" UriSource="/resources/add-icon.png"/>
+        <BitmapImage x:Key="ConfirmIcon" UriSource="/resources/confirm-icon.png"/>
+        <BitmapImage x:Key="CancelIcon" UriSource="/resources/cancel-icon.png"/>
 
         <!--Application General Styles-->
         <Style TargetType="{x:Type TextBlock}">
@@ -25,6 +27,7 @@
         <SolidColorBrush Color="#1B2D54" x:Key="BackgroundColorHover"/>
         <SolidColorBrush Color="#2D4A89" x:Key="BorderColor"/>
         <SolidColorBrush Color="#E5E5E5" x:Key="TextColor"/>
+        <SolidColorBrush Color="#ebe6e6" x:Key="TextInputBackgroundColor"/>
 
     </Application.Resources>
 </Application>
