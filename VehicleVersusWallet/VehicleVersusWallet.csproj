@@ -78,6 +78,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddTransportationWindow.xaml.cs">
+      <DependentUpon>AddTransportationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddVehicleWindow.xaml.cs">
       <DependentUpon>AddVehicleWindow.xaml</DependentUpon>
     </Compile>
@@ -91,6 +94,10 @@
     <Compile Include="VehicleUserControl.xaml.cs">
       <DependentUpon>VehicleUserControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddTransportationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddVehicleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

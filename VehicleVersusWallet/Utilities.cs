@@ -44,6 +44,7 @@ namespace VehicleVersusWallet
 		// Currently selected units
 		public static ConsumptionUnit ConsumptionUnit { get; set; }
 		public static CurrencyUnit CurrencyUnit { get; set; }
+		public static DistanceUnit DistanceUnit { get; set; }
 
 		public static ObservableCollection<Vehicle> VehicleList;
 
@@ -64,8 +65,9 @@ namespace VehicleVersusWallet
 			mainWindow.WindowState = Convert.ToInt32(settingsDataRow["FULLSCREEN"]) == 1 ? WindowState.Maximized : WindowState.Normal;
 
 			// Initialize the default units
-			ConsumptionUnit = (ConsumptionUnit)Convert.ToInt32(settingsDataTable.Rows[0]["SELECTED_CONSUMPTION_UNIT_INDEX"]);
-			CurrencyUnit = (CurrencyUnit)Convert.ToInt32(settingsDataTable.Rows[0]["SELECTED_CURRENCY_UNIT_INDEX"]);
+			ConsumptionUnit = (ConsumptionUnit)Convert.ToInt32(settingsDataRow["SELECTED_CONSUMPTION_UNIT_INDEX"]);
+			CurrencyUnit = (CurrencyUnit)Convert.ToInt32(settingsDataRow["SELECTED_CURRENCY_UNIT_INDEX"]);
+			DistanceUnit = (DistanceUnit)Convert.ToInt32(settingsDataRow["SELECTED_DISTANCE_UNIT_INDEX"]);
 
 			// Initialize the lists
 			VehicleList = new ObservableCollection<Vehicle>(SqlKernel.GetVehicles());
@@ -84,9 +86,9 @@ namespace VehicleVersusWallet
 		public static float GetLocalPriceValue(float originalValue, CurrencyUnit originalUnit)
 		{
 			// These exchange rates are hardcoded and temporary until I write an automatic fetcher of exchange rates.
-			float EUR_TO_USD_RATE = 1.11f;
-			float EUR_TO_POUND_RATE = 0.85f;
-			float USD_TO_POUND_RATE = 0.77f;
+			const float EUR_TO_USD_RATE = 1.11f;
+			const float EUR_TO_POUND_RATE = 0.85f;
+			const float USD_TO_POUND_RATE = 0.77f;
 
 			float convertedValue = originalValue;
 
@@ -118,10 +120,10 @@ namespace VehicleVersusWallet
 		public static float GetLocalConsumptionValue(float originalValue, ConsumptionUnit originalUnit)
 		{
 			// Unit convertion multipliers. For the opposite convertion multiply with (1/multiplier).
-			float LITRE_TO_GALLON_UK_MULTIPLIER = 0.219969f;
-			float LITRE_TO_GALLON_US_MULTIPLIER = 0.264171f;
-			float GALLON_UK_TO_GALLON_US_MULTIPLIER = 1.20095f;
-			float KILOMETRE_TO_MILE_MULTIPLIER = 0.621371f;
+			const float LITRE_TO_GALLON_UK_MULTIPLIER = 0.219969f;
+			const float LITRE_TO_GALLON_US_MULTIPLIER = 0.264171f;
+			const float GALLON_UK_TO_GALLON_US_MULTIPLIER = 1.20095f;
+			const float KILOMETRE_TO_MILE_MULTIPLIER = 0.621371f;
 
 			// The convertion comes in two steps. First, if we need to swap the form of the format
 			// (ie FuelVolume/Distance <-> Distance/FuelVolume) do that. Then, we make any unit transformations
@@ -157,6 +159,22 @@ namespace VehicleVersusWallet
 			}
 
 			return (float)Math.Round(convertedValue, 2);
+		}
+
+		public static float GetLocalDistanceValue(float originalValue, DistanceUnit originalUnit)
+		{
+			// Convertion multipliers
+			const float KILOMETER_TO_MILE_MULTIPLIER = 0.621371f;
+
+			// Make the convertion
+			float convertedValue = originalValue;
+			if (originalUnit == DistanceUnit.KILOMETERS && DistanceUnit == DistanceUnit.MILES)
+				convertedValue *= KILOMETER_TO_MILE_MULTIPLIER;
+			else if (originalUnit == DistanceUnit.MILES && DistanceUnit == DistanceUnit.KILOMETERS)
+				convertedValue *= 1 / KILOMETER_TO_MILE_MULTIPLIER;
+
+			// Return the converted value
+			return convertedValue;
 		}
 	}
 }

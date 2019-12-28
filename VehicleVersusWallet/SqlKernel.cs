@@ -40,15 +40,24 @@ namespace VehicleVersusWallet
 				"CONSUMPTION_UNIT_INDEX_ORIGINAL INTEGER NOT NULL, " +
 				"CURRENCY_UNIT_INDEX_ORIGINAL INTEGER NOT NULL);";
 
+			string transportationsTableString = "CREATE TABLE TRANSPORTATIONS (TRANSPORTATION_ID INTEGER PRIMARY KEY UNIQUE NOT NULL, " +
+				"NAME VARCHAR NOT NULL, " +
+				"CITY_PERCENTAGE INTEGER NOT NULL, " +
+				"HIGHWAY_PERCENTAGE INTEGER NOT NULL, " +
+				"DISTANCE_ORIGINAL DECIMAL NOT NULL, " +
+				"SELECTED_DISTANCE_UNIT_INDEX INTEGER NOT NULL);";
+
 			string settingsTableString = "CREATE TABLE SETTINGS (WINDOW_WIDTH INTEGER NOT NULL DEFAULT(1200), " +
 				"WINDOW_HEIGHT INTEGER NOT NULL	DEFAULT(600), " +
 				"FULLSCREEN BOOLEAN NOT NULL DEFAULT(FALSE), " +
 				"SELECTED_CONSUMPTION_UNIT_INDEX INTEGER NOT NULL DEFAULT(0), " +
-				"SELECTED_CURRENCY_UNIT_INDEX INTEGER NOT NULL DEFAULT(0));";
+				"SELECTED_CURRENCY_UNIT_INDEX INTEGER NOT NULL DEFAULT(0), " +
+				"SELECTED_DISTANCE_UNIT_INDEX INTEGER NOT NULL DEFAULT(0));";
 
 			string settingsDefaultInsertString = "INSERT INTO SETTINGS DEFAULT VALUES;";
 
 			ExecuteQuery(vehiclesTableString);
+			ExecuteQuery(transportationsTableString);
 			ExecuteQuery(settingsTableString);
 			ExecuteQuery(settingsDefaultInsertString);
 		}
@@ -137,6 +146,40 @@ namespace VehicleVersusWallet
 		public static void DeleteVehicle(int vehicleID)
 		{
 			ExecuteQuery($"DELETE FROM VEHICLES WHERE VEHICLE_ID={vehicleID};");
+		}
+
+		/// <summary>
+		/// Adds the given transportation to the database.
+		/// </summary>
+		/// <param name="transportation">The transportation object to add to the database.</param>
+		public static void AddTransportation(Transportation transportation)
+		{
+			string sqlQuery = $"INSERT INTO TRANSPORTATIONS (TRANSPORTATION_ID, NAME, CITY_PERCENTAGE, HIGHWAY_PERCENTAGE, " +
+				$"DISTANCE_ORIGINAL, SELECTED_DISTANCE_UNIT_INDEX) VALUES ({transportation.TransportationID}, " +
+				$"'{transportation.TransportationName}', {transportation.CityPercentage}, {transportation.HighwayPercentage}, " +
+				$"{(int)transportation.DistanceUnitOriginal});";
+
+			ExecuteQuery(sqlQuery);
+		}
+
+		/// <summary>
+		/// Fetches an available ID to be used by a transportation at its creation.
+		/// </summary>
+		/// <returns>The available vehicle identifier.</returns>
+		public static int GetAvailableTransportationID()
+		{
+			DataTable dataTable = ExecuteQuery("SELECT MAX(TRANSPORTATION_ID) FROM TRANSPORTATIONS;");
+			string returnString = dataTable.Rows[0]["MAX(TRANSPORTATION_ID)"].ToString();
+			return returnString == "" ? 0 : Convert.ToInt32(returnString) + 1;
+		}
+
+		/// <summary>
+		/// Deletes a transportation from the database, using its identifier.
+		/// </summary>
+		/// <param name="transportationID">The vehicle that we want deleted identifier.</param>
+		public static void DeleteTransportation(int transportationID)
+		{
+			ExecuteQuery($"DELETE FROM TRANSPORTATIONS WHERE TRANSPORTATION_ID={transportationID};");
 		}
 
 		#endregion
