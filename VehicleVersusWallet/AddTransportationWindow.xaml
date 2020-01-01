@@ -8,6 +8,9 @@
         Title="Add a new transportation" Height="230" Width="600"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" Background="White">
+    <Window.Resources>
+        <local:RoadTypePercentageConverter x:Key="RoadTypePercentageConverter"/>
+    </Window.Resources>
     <Grid Margin="1,0,1,1" Background="{StaticResource ApplicationBackgroundColor}">
         <Grid Margin="4" Background="{StaticResource ApplicationBackgroundColor}">
             <Grid.RowDefinitions>
@@ -23,31 +26,43 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Name" VerticalAlignment="Center" Foreground="{StaticResource TextColor}"/>
-            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-                <TextBox  Name="NameTextBox" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{StaticResource TextInputBackgroundColor}"
-                      Foreground="{StaticResource BackgroundColor}"/>
-                <ComboBox Name="VehicleTypeCombobox" Width="125" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            </StackPanel>
+            <TextBox Grid.Row="0" Grid.Column="1" Name="NameTextBox" Width="280" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{StaticResource TextInputBackgroundColor}"
+                     Foreground="{StaticResource BackgroundColor}"/>
 
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Price" VerticalAlignment="Center" Foreground="{StaticResource TextColor}"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Distance" VerticalAlignment="Center" Foreground="{StaticResource TextColor}"/>
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-                <TextBox  Name="PriceTextBox" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{StaticResource TextInputBackgroundColor}"
-                      Foreground="{StaticResource BackgroundColor}"/>
-                <ComboBox Name="CurrencyCombobox" Width="125" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="CurrencyCombobox_SelectionChanged"/>
+                <TextBox  Name="DistanceTextBox" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{StaticResource TextInputBackgroundColor}"
+                          Foreground="{StaticResource BackgroundColor}"/>
+                <ComboBox Name="Distance" Width="125" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="DistanceCombobox_SelectionChanged"/>
             </StackPanel>
 
-            <TextBlock Text="Fuel Consumption (City)" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="{StaticResource TextColor}"/>
-            <StackPanel Orientation="Horizontal"  Grid.Row="2" Grid.Column="1">
-                <TextBox Name="ConsumptionCityTextBox" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{StaticResource TextInputBackgroundColor}"
-                      Foreground="{StaticResource BackgroundColor}"/>
-                <ComboBox Name="ConsumptionCityCombobox" Width="125" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="ConsumptionCityCombobox_SelectionChanged"/>
+            <TextBlock Text="Road Type" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="{StaticResource TextColor}"/>
+            <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1">
+                <DockPanel LastChildFill="True">
+                    <TextBlock Name="HighwayPercentageTextBlock" Foreground="{StaticResource TextColor}" DockPanel.Dock="Right"
+                               Margin="0,0,5,0">
+                        <TextBlock.Text>
+                            <MultiBinding Converter="{StaticResource RoadTypePercentageConverter}">
+                                <Binding ElementName="RoadTypeSlider" Path="Value"/>
+                                <Binding ElementName="HighwayPercentageTextBlock" Path="Name"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock Name="CityPercentageTextBlock" Foreground="{StaticResource TextColor}" DockPanel.Dock="Left"
+                               Margin="5,0,0,0">
+                        <TextBlock.Text>
+                            <MultiBinding Converter="{StaticResource RoadTypePercentageConverter}">
+                                <Binding ElementName="RoadTypeSlider" Path="Value"/>
+                                <Binding ElementName="CityPercentageTextBlock" Path="Name"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DockPanel>
+                <Slider Name="RoadTypeSlider" Minimum="0" Maximum="100" Value="50"/>
             </StackPanel>
 
-            <TextBlock Text="Fuel Consumption (Highway)" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Foreground="{StaticResource TextColor}"/>
+            <TextBlock Text="Repeat every" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Foreground="{StaticResource TextColor}"/>
             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
-                <TextBox Name="ConsumptionHighwayTextBox" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{StaticResource TextInputBackgroundColor}"
-                      Foreground="{StaticResource BackgroundColor}"/>
-                <ComboBox Name="ConsumptionHighwayCombobox" Width="125" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="ConsumptionHighwayCombobox_SelectionChanged"/>
             </StackPanel>
 
             <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">

@@ -42,7 +42,8 @@ namespace VehicleVersusWallet
 
 		private void AddTransportation_Click(object sender, MouseButtonEventArgs e)
 		{
-
+			AddTransportationWindow addTransportationWindow = new AddTransportationWindow();
+			addTransportationWindow.ShowDialog();
 		}
 	}
 }
