@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VehicleVersusWallet"
+        xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
         Title="Vehicle Versus Wallet" Height="600" Width="1200"
         WindowStartupLocation="CenterScreen">
@@ -39,6 +40,12 @@
                 </ScrollViewer>
             </StackPanel>
         </Border>
+
+        <oxy:Plot Name="Plot" Grid.Column="1" Title="asd">
+            <oxy:Plot.Series>
+                <oxy:LineSeries ItemsSource="{Binding PlotPoints}"/>
+            </oxy:Plot.Series>
+        </oxy:Plot>
 
         <Border Grid.Column="2" BorderBrush="{StaticResource BorderColor}" BorderThickness="3,0,0,0">
             <StackPanel Orientation="Vertical">

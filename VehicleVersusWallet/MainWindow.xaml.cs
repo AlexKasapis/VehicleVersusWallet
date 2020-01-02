@@ -1,5 +1,7 @@
-﻿using System;
+﻿using OxyPlot;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -18,6 +20,16 @@ namespace VehicleVersusWallet
 {
 	public partial class MainWindow : Window
 	{
+		private ObservableCollection<DataPoint> PlotPoints = new ObservableCollection<DataPoint>()
+			{
+				new DataPoint(0, 4),
+				new DataPoint(10, 13),
+				new DataPoint(20, 15),
+				new DataPoint(30, 16),
+				new DataPoint(40, 12),
+				new DataPoint(50, 12)
+			};
+
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -27,6 +39,8 @@ namespace VehicleVersusWallet
 
 			VehiclesList.ItemsSource = Utilities.VehicleList;
 			TransportationsList.ItemsSource = Utilities.TransportationList;
+
+			RefreshPlot(null, null);
 		}
 
 		private void AddVehicle_Click(object sender, MouseButtonEventArgs e)
@@ -51,6 +65,19 @@ namespace VehicleVersusWallet
 			// Add the vehicle to the list and the database
 			SqlKernel.AddTransportation(addTransportationWindow.Transportation);
 			Utilities.TransportationList.Add(addTransportationWindow.Transportation);
+		}
+
+		public void RefreshPlot(List<Vehicle> vehicleList, List<Transportation> transportationList)
+		{
+			PlotPoints = new ObservableCollection<DataPoint>
+			{
+				new DataPoint(0, 4),
+				new DataPoint(10, 13),
+				new DataPoint(20, 15),
+				new DataPoint(30, 16),
+				new DataPoint(40, 12),
+				new DataPoint(50, 12)
+			};
 		}
 	}
 }
