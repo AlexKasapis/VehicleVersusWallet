@@ -11,7 +11,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
 
         <Border Grid.Column="0" BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,3,0">
@@ -41,17 +41,29 @@
         </Border>
 
         <Border Grid.Column="2" BorderBrush="{StaticResource BorderColor}" BorderThickness="3,0,0,0">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Text="Transportations List" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,5,5,5" FontWeight="DemiBold"
-                               Foreground="{StaticResource TextColor}"/>
-                    <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="0,1,0,0"/>
-                    <StackPanel Orientation="Vertical"/>
-                    <local:RichButton ButtonImage="{StaticResource AddIcon}" ButtonText="Add Transportation" MouseLeftButtonUp="AddTransportation_Click"
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Scheduled Transportations" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,5,5,5" FontWeight="DemiBold" Foreground="{StaticResource TextColor}"/>
+                <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="0,1,0,0"/>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Orientation="Vertical">
+                        <ItemsControl x:Name="TransportationsList" Grid.Column="0">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:TransportationUserControl Content="{Binding Transportation}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <local:RichButton ButtonImage="{StaticResource AddIcon}" ButtonText="Add Transportation" MouseLeftButtonUp="AddTransportation_Click"
                                       ButtonBorderBrush="{StaticResource BorderColor}" ButtonBackground="{StaticResource BackgroundColor}" ButtonWidth="175" ButtonTextWidth="110" Margin="5"
                                       ButtonBackgroundHover="{StaticResource BackgroundColorHover}" ButtonTextBrush="{StaticResource TextColor}"/>
-                </StackPanel>
-            </ScrollViewer>
+                    </StackPanel>
+                </ScrollViewer>
+            </StackPanel>
         </Border>
     </Grid>
 </Window>

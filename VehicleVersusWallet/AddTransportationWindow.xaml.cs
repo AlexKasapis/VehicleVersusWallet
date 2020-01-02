@@ -20,39 +20,42 @@ namespace VehicleVersusWallet
 	/// </summary>
 	public partial class AddTransportationWindow : Window
 	{
+		public Transportation Transportation;
+
 		public AddTransportationWindow()
 		{
 			InitializeComponent();
+
+			// Setup the combobox
+			DistanceTypeComboBox.ItemsSource = Utilities.DistanceUnitList;
+			DistanceTypeComboBox.SelectedIndex = (int)Utilities.DistanceUnit;
 		}
 
-		private void AddVehicle_Click(object sender, MouseButtonEventArgs e)
+		private void AddTransportation_Click(object sender, MouseButtonEventArgs e)
 		{
+			Transportation = new Transportation()
+			{
+				TransportationID = SqlKernel.GetAvailableTransportationID(),
+				TransportationName = NameTextBox.Text,
+				CityPercentage = 100 - (int)RoadTypeSlider.Value,
+				HighwayPercentage = (int)RoadTypeSlider.Value,
+				TotalDistanceOriginal = float.Parse(DistanceTextBox.Text),
+				DistanceUnitOriginal = (DistanceUnit)DistanceTypeComboBox.SelectedIndex,
+				RepeatFrequency = RepeatFrequency.WEEK,
+				RepeatAmount = 5
+			};
 
+			DialogResult = true;
 		}
 
 		private void Cancel_Click(object sender, MouseButtonEventArgs e)
 		{
-
+			DialogResult = false;
 		}
 
-		private void CurrencyCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void DistanceTypeCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-
-		}
-
-		private void ConsumptionCityCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-
-		}
-
-		private void ConsumptionHighwayCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-
-		}
-
-		private void DistanceCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-
+			Utilities.DistanceUnit = (DistanceUnit)DistanceTypeComboBox.SelectedIndex;
 		}
 	}
 

@@ -26,6 +26,7 @@ namespace VehicleVersusWallet
 			Utilities.InitializeUtilities(this);
 
 			VehiclesList.ItemsSource = Utilities.VehicleList;
+			TransportationsList.ItemsSource = Utilities.TransportationList;
 		}
 
 		private void AddVehicle_Click(object sender, MouseButtonEventArgs e)
@@ -44,6 +45,12 @@ namespace VehicleVersusWallet
 		{
 			AddTransportationWindow addTransportationWindow = new AddTransportationWindow();
 			addTransportationWindow.ShowDialog();
+			if (addTransportationWindow.DialogResult == false)
+				return;
+
+			// Add the vehicle to the list and the database
+			SqlKernel.AddTransportation(addTransportationWindow.Transportation);
+			Utilities.TransportationList.Add(addTransportationWindow.Transportation);
 		}
 	}
 }

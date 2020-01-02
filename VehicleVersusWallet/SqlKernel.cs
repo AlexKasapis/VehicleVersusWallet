@@ -45,7 +45,9 @@ namespace VehicleVersusWallet
 				"CITY_PERCENTAGE INTEGER NOT NULL, " +
 				"HIGHWAY_PERCENTAGE INTEGER NOT NULL, " +
 				"DISTANCE_ORIGINAL DECIMAL NOT NULL, " +
-				"SELECTED_DISTANCE_UNIT_INDEX INTEGER NOT NULL);";
+				"SELECTED_DISTANCE_UNIT_INDEX INTEGER NOT NULL," +
+				"REPETITION_FREQUENCY_INDEX INTEGER NOT NULL," +
+				"REPETITION_AMOUNT INTEGER NOT NULL);";
 
 			string settingsTableString = "CREATE TABLE SETTINGS (WINDOW_WIDTH INTEGER NOT NULL DEFAULT(1200), " +
 				"WINDOW_HEIGHT INTEGER NOT NULL	DEFAULT(600), " +
@@ -93,7 +95,7 @@ namespace VehicleVersusWallet
 		#region Specific database functions
 
 		/// <summary>
-		/// Returns all the vehices registered in the database.
+		/// Returns all the vehicles registered in the database.
 		/// </summary>
 		/// <returns>A list with Vehicle objects that are found in the database.</returns>
 		public static List<Vehicle> GetVehicles()
@@ -149,15 +151,37 @@ namespace VehicleVersusWallet
 		}
 
 		/// <summary>
+		/// Returns all the transportations registered in the database.
+		/// </summary>
+		/// <returns>A list with Transportation objects that are found in the database.</returns>
+		public static List<Transportation> GetTransportations()
+		{
+			// Get the data.
+			DataTable dataTable = ExecuteQuery("SELECT * FROM TRANSPORTATIONS;");
+
+			// Create and populate the vehicles' list.
+			List<Transportation> transportations = new List<Transportation>();
+			foreach (DataRow dataRow in dataTable.Rows)
+			{
+				Transportation transportation = new Transportation(dataRow);
+				transportations.Add(transportation);
+			}
+
+			// Return the list, empty or otherwise.
+			return transportations;
+		}
+
+		/// <summary>
 		/// Adds the given transportation to the database.
 		/// </summary>
 		/// <param name="transportation">The transportation object to add to the database.</param>
 		public static void AddTransportation(Transportation transportation)
 		{
 			string sqlQuery = $"INSERT INTO TRANSPORTATIONS (TRANSPORTATION_ID, NAME, CITY_PERCENTAGE, HIGHWAY_PERCENTAGE, " +
-				$"DISTANCE_ORIGINAL, SELECTED_DISTANCE_UNIT_INDEX) VALUES ({transportation.TransportationID}, " +
-				$"'{transportation.TransportationName}', {transportation.CityPercentage}, {transportation.HighwayPercentage}, " +
-				$"{(int)transportation.DistanceUnitOriginal});";
+				$"DISTANCE_ORIGINAL, SELECTED_DISTANCE_UNIT_INDEX, REPETITION_FREQUENCY_INDEX, REPETITION_AMOUNT) VALUES (" +
+				$"{transportation.TransportationID}, '{transportation.TransportationName}', {transportation.CityPercentage}, " +
+				$"{transportation.HighwayPercentage}, {transportation.TotalDistanceOriginal}, {(int)transportation.DistanceUnitOriginal}, " +
+				$"{(int)transportation.RepeatFrequency}, {transportation.RepeatAmount});";
 
 			ExecuteQuery(sqlQuery);
 		}

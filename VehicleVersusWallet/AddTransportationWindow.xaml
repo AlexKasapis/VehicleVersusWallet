@@ -33,7 +33,7 @@
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
                 <TextBox  Name="DistanceTextBox" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{StaticResource TextInputBackgroundColor}"
                           Foreground="{StaticResource BackgroundColor}"/>
-                <ComboBox Name="Distance" Width="125" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="DistanceCombobox_SelectionChanged"/>
+                <ComboBox Name="DistanceTypeComboBox" Width="125" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="DistanceTypeCombobox_SelectionChanged"/>
             </StackPanel>
 
             <TextBlock Text="Road Type" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="{StaticResource TextColor}"/>
@@ -66,9 +66,9 @@
             </StackPanel>
 
             <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                <local:RichButton ButtonText="Add Vehicle" ButtonBackground="{StaticResource BackgroundColor}" Margin="5,5,5,0" ButtonBackgroundHover="{StaticResource BackgroundColorHover}"
-                              ButtonBorderBrush="{StaticResource BorderColor}" MouseLeftButtonUp="AddVehicle_Click" ButtonImage="{StaticResource ConfirmIcon}" ButtonWidth="150"
-                              ButtonTextWidth="90" ButtonHeight="40" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <local:RichButton ButtonText="Add Transportation" ButtonBackground="{StaticResource BackgroundColor}" Margin="5,5,5,0" ButtonBackgroundHover="{StaticResource BackgroundColorHover}"
+                              ButtonBorderBrush="{StaticResource BorderColor}" MouseLeftButtonUp="AddTransportation_Click" ButtonImage="{StaticResource ConfirmIcon}" ButtonWidth="200"
+                              ButtonTextWidth="150" ButtonHeight="40" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                 <local:RichButton ButtonText="Cancel" ButtonBackground="{StaticResource BackgroundColor}" Margin="5,5,5,0" ButtonBackgroundHover="{StaticResource BackgroundColorHover}"
                               ButtonBorderBrush="{StaticResource BorderColor}" MouseLeftButtonUp="Cancel_Click" ButtonImage="{StaticResource CancelIcon}" ButtonWidth="110"
                               ButtonTextWidth="60" ButtonHeight="40" HorizontalAlignment="Left" VerticalAlignment="Center"/>

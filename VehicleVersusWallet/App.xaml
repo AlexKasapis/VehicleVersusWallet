@@ -11,6 +11,9 @@
         <BitmapImage x:Key="AddIcon" UriSource="/resources/add-icon.png"/>
         <BitmapImage x:Key="ConfirmIcon" UriSource="/resources/confirm-icon.png"/>
         <BitmapImage x:Key="CancelIcon" UriSource="/resources/cancel-icon.png"/>
+        <BitmapImage x:Key="DistanceIcon" UriSource="/resources/distance-icon.png"/>
+        <BitmapImage x:Key="RoadTypeIcon" UriSource="/resources/road-type-icon.png"/>
+        <BitmapImage x:Key="RepeatIcon" UriSource="/resources/repetition-icon.png"/>
 
         <!--Application General Styles-->
         <Style TargetType="{x:Type TextBlock}">

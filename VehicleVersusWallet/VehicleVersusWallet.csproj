@@ -89,6 +89,9 @@
     </Compile>
     <Compile Include="SqlKernel.cs" />
     <Compile Include="Transportation.cs" />
+    <Compile Include="TransportationUserControl.xaml.cs">
+      <DependentUpon>TransportationUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities.cs" />
     <Compile Include="Vehicle.cs" />
     <Compile Include="VehicleUserControl.xaml.cs">
@@ -115,6 +118,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="RichButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TransportationUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -173,6 +180,11 @@
   <ItemGroup>
     <Resource Include="resources\cancel-icon.png" />
     <Resource Include="resources\confirm-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\distance-icon.png" />
+    <Resource Include="resources\repetition-icon.png" />
+    <Resource Include="resources\road-type-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -30,6 +30,11 @@ namespace VehicleVersusWallet
 		CAR, MOTORCYCLE
 	}
 
+	public enum RepeatFrequency
+	{
+		WEEK, MONTH, YEAR
+	}
+
 	public static class Utilities
 	{
 		// The indexes of the values below must correspond to the value of each unit in the enumerations
@@ -37,9 +42,11 @@ namespace VehicleVersusWallet
 		{
 			"Lt/100km", "G/100Mi(US)", "G/100Mi(UK)", "km/Lt", "Mi/G(US)", "Mi/G(UK)"
 		};
+		public static List<string> DistanceUnitList = new List<string> { "Kilometers", "Miles" };
 		public static List<string> CurrencyUnitList = new List<string> { "Euro (€)", "US Dollar ($)", "Pound (£)" };
 		public static List<string> CurrencyUnitSymbolList = new List<string> { "€", "$", "£" };
 		public static List<string> VehicleTypesList = new List<string> { "Car", "Motorcycle" };
+		public static List<string> RepeatFrequencyList = new List<string> { "Week", "Month", "Year" };
 
 		// Currently selected units
 		public static ConsumptionUnit ConsumptionUnit { get; set; }
@@ -47,6 +54,7 @@ namespace VehicleVersusWallet
 		public static DistanceUnit DistanceUnit { get; set; }
 
 		public static ObservableCollection<Vehicle> VehicleList;
+		public static ObservableCollection<Transportation> TransportationList;
 
 		/// <summary>
 		/// Loads any precursor data needed for the application. These data are the application settings and any
@@ -71,6 +79,7 @@ namespace VehicleVersusWallet
 
 			// Initialize the lists
 			VehicleList = new ObservableCollection<Vehicle>(SqlKernel.GetVehicles());
+			TransportationList = new ObservableCollection<Transportation>(SqlKernel.GetTransportations());
 		}
 
 		public static string GetCurrencyUnit(bool symbolOnly)
@@ -81,6 +90,11 @@ namespace VehicleVersusWallet
 		public static string GetConsumptionUnit()
 		{
 			return ConsumptionUnitList[(int)ConsumptionUnit];
+		}
+
+		public static string GetDistanceUnit()
+		{
+			return DistanceUnitList[(int)DistanceUnit];
 		}
 
 		public static float GetLocalPriceValue(float originalValue, CurrencyUnit originalUnit)

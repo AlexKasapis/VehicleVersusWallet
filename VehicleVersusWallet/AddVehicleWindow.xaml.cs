@@ -19,8 +19,7 @@ namespace VehicleVersusWallet
 	{
 		public Vehicle Vehicle;
 		private bool automaticChangingCombobox = false;
-
-
+		
 		public AddVehicleWindow()
 		{
 			InitializeComponent();

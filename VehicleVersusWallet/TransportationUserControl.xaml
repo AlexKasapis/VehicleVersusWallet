@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="VehicleVersusWallet.TransportationUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VehicleVersusWallet"
+             mc:Ignorable="d" 
+             d:DesignHeight="70" d:DesignWidth="200">
+    <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,0,1">
+        <Border.Style>
+            <Style TargetType="Border">
+                <Setter Property="Background" Value="{StaticResource BackgroundColor}"/>
+                <Style.Triggers>
+                    <Trigger Property="Border.IsMouseOver" Value="True">
+                        <Setter Property="Border.Background" Value="{StaticResource BackgroundColorHover}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <CheckBox Grid.Row="0" Grid.Column="0" Name="ShowInGraphCheckbox" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="True"
+                      ToolTip="Use this transporation in the graphs"/>
+
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding TransportationName}" VerticalAlignment="Center" ToolTip="Given name" FontWeight="DemiBold" Foreground="{StaticResource TextColor}" Margin="5,0,5,0"/>
+
+            <Button Grid.Row="1" Grid.Column="0" Click="EditTransportation_Click" VerticalAlignment="Center" ToolTip="Edit/Remove transportation" Width="14">
+                <Image Source="{StaticResource SettingsIcon}"/>
+            </Button>
+
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="5,5,5,0">
+                <Image Source="{StaticResource DistanceIcon}" Width="20" Height="20" ToolTip="Total distance"/>
+                <TextBlock Text="{Binding TotalDistanceShortString}" Margin="5,0,0,0" VerticalAlignment="Center" ToolTip="TotalDitance" Foreground="{StaticResource TextColor}"/>
+                <Image Source="{StaticResource RoadTypeIcon}" Margin="15,0,0,0" Width="20" Height="20" ToolTip="Road type (city/highway)"/>
+                <TextBlock Text="{Binding DistancePercentageLongString}" Margin="5,0,0,0" VerticalAlignment="Center" ToolTip="Road type (city/highway)" Foreground="{StaticResource TextColor}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="5,5,5,0">
+                <Image Source="{StaticResource RepeatIcon}" Width="20" Height="20" ToolTip="Scheduled repetitions"/>
+                <TextBlock Text="{Binding RepetitionString}" Margin="5,0,0,0" VerticalAlignment="Center" ToolTip="Scheduled repetitions" Foreground="{StaticResource TextColor}"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>
